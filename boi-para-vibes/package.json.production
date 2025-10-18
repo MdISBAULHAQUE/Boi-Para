@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "build:prod": "vite build --mode production",
+    "preview:prod": "vite preview --mode production",
+    "analyze": "vite-bundle-analyzer dist",
+    "lighthouse": "lighthouse http://localhost:4173 --output html --output-path ./lighthouse-report.html"
+  },
+  "devDependencies": {
+    "vite-bundle-analyzer": "^0.7.0",
+    "lighthouse": "^11.0.0"
+  }
+}

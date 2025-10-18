@@ -1,0 +1,27 @@
+{
+  "name": "Boi Para - Kolkata's Premier Bookstore",
+  "short_name": "Boi Para",
+  "description": "Discover rare literary treasures from Kolkata's famous College Street",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF6E3",
+  "theme_color": "#D4AF37",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["books", "education", "shopping"],
+  "lang": "en-US",
+  "dir": "ltr"
+}
