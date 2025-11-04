@@ -1,45 +1,53 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-const Order = sequelize.define('Order', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
+const orderSchema = new mongoose.Schema({
   userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id'
-    }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
-  totalAmount: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-    validate: {
-      min: 0
+  items: [{
+    bookId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Book',
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    price: {
+      type: Number,
+      required: true
     }
+  }],
+  totalAmount: {
+    type: Number,
+    required: true,
+    min: 0
   },
   status: {
-    type: DataTypes.ENUM('pending', 'confirmed', 'shipped', 'delivered', 'cancelled'),
-    defaultValue: 'pending'
+    type: String,
+    enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
+    default: 'pending'
   },
   paymentMethod: {
-    type: DataTypes.ENUM('online', 'cod'),
-    defaultValue: 'cod'
+    type: String,
+    enum: ['online', 'cod'],
+    default: 'cod'
   },
   paymentStatus: {
-    type: DataTypes.ENUM('pending', 'paid', 'failed'),
-    defaultValue: 'pending'
+    type: String,
+    enum: ['pending', 'paid', 'failed'],
+    default: 'pending'
   },
   shippingAddress: {
-    type: DataTypes.JSON,
-    allowNull: false
+    type: Object,
+    required: true
   }
 }, {
   timestamps: true
 });
 
-module.exports = Order;
+module.exports = mongoose.model('Order', orderSchema);

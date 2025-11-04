@@ -1,13 +1,14 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 const testConnection = async (password) => {
   const sequelize = new Sequelize({
     database: 'boi_para',
-    username: 'postgres',
+    username: 'root',
     password: password,
     host: 'localhost',
-    port: 5432,
-    dialect: 'postgres',
+    port: 3306,
+    dialect: 'mysql',
     logging: false
   });
 
@@ -22,22 +23,21 @@ const testConnection = async (password) => {
 };
 
 const tryPasswords = async () => {
-  const passwords = ['', 'postgres', 'password', '123456', 'admin'];
+  const passwords = ['', 'root', 'password', '123456', 'admin'];
   
-  console.log('Testing different PostgreSQL passwords...\n');
+  console.log('Testing different MySQL passwords...\n');
   
   for (const pwd of passwords) {
     const success = await testConnection(pwd);
     if (success) {
-      console.log(`\n🎉 Use this password in your database config: "${pwd}"`);
+      console.log(`\n🎉 Use this password in your .env file: DB_PASSWORD=${pwd}`);
       process.exit(0);
     }
   }
   
   console.log('\n❌ None of the common passwords worked.');
-  console.log('Please check your PostgreSQL installation and set a password.');
-  console.log('You can reset the postgres user password with:');
-  console.log('ALTER USER postgres PASSWORD \'your_password\';');
+  console.log('Please check your MySQL installation and set a password.');
+  console.log('You can install MySQL from: https://dev.mysql.com/downloads/mysql/');
 };
 
 tryPasswords();

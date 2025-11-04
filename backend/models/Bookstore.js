@@ -1,83 +1,69 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const mongoose = require('mongoose');
 
-const Bookstore = sequelize.define('Bookstore', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
+const bookstoreSchema = new mongoose.Schema({
   name: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   ownerName: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   shopNo: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   lane: {
-    type: DataTypes.ENUM('College Street', 'Bankim Chatterjee Street', 'Shyama Charan Dey Street'),
-    allowNull: false
+    type: String,
+    enum: ['College Street', 'Bankim Chatterjee Street', 'Shyama Charan Dey Street'],
+    required: true
   },
   contactNumber: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
-  email: {
-    type: DataTypes.STRING,
-    validate: {
-      isEmail: true
-    }
-  },
+  email: String,
   specialization: {
-    type: DataTypes.JSON,
-    defaultValue: []
+    type: [String],
+    default: []
   },
   rating: {
-    type: DataTypes.DECIMAL(2, 1),
-    defaultValue: 0,
-    validate: {
-      min: 0,
-      max: 5
-    }
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5
   },
   reviews: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
+    type: Number,
+    default: 0
   },
   established: {
-    type: DataTypes.INTEGER,
-    allowNull: false
+    type: Number,
+    required: true
   },
-  description: {
-    type: DataTypes.TEXT
-  },
+  description: String,
   image: {
-    type: DataTypes.STRING,
-    defaultValue: ''
+    type: String,
+    default: ''
   },
   isVerified: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
+    type: Boolean,
+    default: false
   },
   openHours: {
-    type: DataTypes.STRING,
-    defaultValue: '10:00 AM - 8:00 PM'
+    type: String,
+    default: '10:00 AM - 8:00 PM'
   },
   languages: {
-    type: DataTypes.JSON,
-    defaultValue: []
+    type: [String],
+    default: []
   },
   totalBooks: {
-    type: DataTypes.INTEGER,
-    defaultValue: 1000
+    type: Number,
+    default: 1000
   }
 }, {
   timestamps: true
 });
 
-module.exports = Bookstore;
+module.exports = mongoose.model('Bookstore', bookstoreSchema);
